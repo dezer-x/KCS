@@ -1179,7 +1179,7 @@ const Matchmaking: React.FC<MatchmakingProps> = ({
 
                 <div className="container mx-auto px-4 py-8">
                     <div className="text-center mb-8">
-                        <h1 className="font-['FACERG'] text-[#f79631] text-4xl md:text-6xl font-bold uppercase tracking-wider mb-4">
+                        <h1 className="secondary-cs-title font-['FACERG']  text-4xl md:text-6xl font-bold uppercase tracking-wider mb-4">
                             Matchmaking
                         </h1>
                     </div>

@@ -156,7 +156,11 @@ body {
     position: relative;
 }
 
-
+.secondary-cs-title {
+    color: white;
+    text-shadow: 
+        0 0 5px #eded2f;
+}
 .counter-strike-title {
     position: absolute;
     top: 70px;
