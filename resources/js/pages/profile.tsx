@@ -1214,6 +1214,14 @@ export default function Profile() {
                 <audio ref={audioRef} preload="auto">
                     <source src="/cs2-sound.mp3" type="audio/mpeg" />
                 </audio>
+                <div className="absolute bottom-2 right-2 md:bottom-8 md:right-8 flex gap-4 text-gray-400 text-xs md:text-sm font-['Trebuchet']">
+                    <a href="https://hosting.karasu.live/privacy-policy" target="_blank" rel="noopener noreferrer" className="hover:text-[#f79631] transition-colors">
+                        Privacy Policy
+                    </a>
+                    <a href="https://hosting.karasu.live/terms-of-services" target="_blank" rel="noopener noreferrer" className="hover:text-[#f79631] transition-colors">
+                        Terms of Service
+                    </a>
+                </div>
             </div>
         </>
     );
