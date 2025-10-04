@@ -24,6 +24,7 @@ Route::middleware(['auth', 'admin', 'banned'])->prefix('admin')->group(function 
     Route::post('users/unban', [UserBanController::class, 'unbanUser'])->name('admin.users.unban');
     Route::get('users/banned', [UserBanController::class, 'getBannedUsers'])->name('admin.users.banned');
     Route::get('users/ban-durations', [UserBanController::class, 'getBanDurations'])->name('admin.users.ban-durations');
+    Route::post('users/toggle-role', [AdminController::class, 'toggleUserRole'])->name('admin.users.toggle-role');
     Route::resource('matchmaking', AdminMatchmakingController::class)->names([
         'index' => 'admin.matchmaking.index',
         'create' => 'admin.matchmaking.create',

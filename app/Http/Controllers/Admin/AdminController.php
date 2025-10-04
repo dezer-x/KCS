@@ -47,7 +47,6 @@ class AdminController extends Controller
             '3000+' => User::where('elo', '>', 3000)->count(),
         ];
         $usersQuery = User::with(['friends', 'bannedBy'])
-            ->where('role', '!=', 'admin') 
             ->orderBy('created_at', 'desc');
         if ($request->has('search') && $request->search) {
             $search = $request->search;
@@ -121,5 +120,27 @@ class AdminController extends Controller
             'recentUsers' => $recentUsers,
             'bannedUsers' => $bannedUsers,
         ]);
+    }
+
+    public function toggleUserRole(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+
+        // Prevent self-demotion
+        if ($user->id === auth()->id()) {
+            return redirect()->back()->with('error', 'You cannot change your own role.');
+        }
+
+        // Toggle role between 'user' and 'admin'
+        $user->role = $user->role === 'admin' ? 'user' : 'admin';
+        $user->save();
+
+        $action = $user->role === 'admin' ? 'promoted to admin' : 'demoted to user';
+
+        return redirect()->back()->with('success', "User {$user->name} has been {$action}.");
     }
 }

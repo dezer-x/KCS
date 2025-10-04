@@ -190,13 +190,29 @@ export default function AdminDashboard() {
 
   const handleBannedUsersSearch = (query: string) => {
     setBannedUsersSearch(query);
-    router.get('/admin/dashboard', { 
+    router.get('/admin/dashboard', {
       tab: 'banned',
-      banned_search: query 
+      banned_search: query
     }, {
       preserveState: true,
       replace: true,
     });
+  };
+
+  const handleToggleRole = (user: any) => {
+    const action = user.role === 'admin' ? 'demote to user' : 'promote to admin';
+    if (confirm(`Are you sure you want to ${action} ${user.name}?`)) {
+      router.post('/admin/users/toggle-role', {
+        user_id: user.id,
+      }, {
+        onSuccess: () => {
+          router.reload();
+        },
+        onError: (errors) => {
+          console.error('Role toggle error:', errors);
+        }
+      });
+    }
   };
 
   // Convert ELO distribution to bar chart format with same color
@@ -511,6 +527,17 @@ export default function AdminDashboard() {
                                     Ban
                                   </button>
                                 )}
+                                <button
+                                  onClick={() => handleToggleRole(user)}
+                                  className={`px-3 py-1.5 text-xs font-['Trebuchet'] transition-all duration-200 border ${
+                                    user.role === 'admin'
+                                      ? 'bg-yellow-600/20 text-yellow-400 hover:bg-yellow-600/30 hover:text-yellow-300 border-yellow-600/30 hover:border-yellow-600/50'
+                                      : 'bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 hover:text-blue-300 border-blue-600/30 hover:border-blue-600/50'
+                                  }`}
+                                  onMouseEnter={playHoverSound}
+                                >
+                                  {user.role === 'admin' ? 'Demote' : 'Make Admin'}
+                                </button>
                               </div>
                             </td>
                           </tr>
