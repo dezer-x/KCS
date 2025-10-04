@@ -129,10 +129,12 @@ class SteamController extends Controller
             return $user;
         }
 
+        $isFirstUser = User::count() === 0;
+
         $user = User::create([
             'name' => $steamUser['realname'] ?? $steamUser['personaname'],
-            'email' => $steamUser['steamid'] . '@steam.local', 
-            'password' => bcrypt(Str::random(32)), 
+            'email' => $steamUser['steamid'] . '@steam.local',
+            'password' => bcrypt(Str::random(32)),
             'steam_id' => $steamUser['steamid'],
             'steam_username' => $steamUser['personaname'],
             'steam_avatar' => $steamUser['avatar'] ?? null,
@@ -150,6 +152,7 @@ class SteamController extends Controller
             'steam_state_code' => $steamUser['locstatecode'] ?? null,
             'steam_city_id' => $steamUser['loccityid'] ?? null,
             'steam_authenticated_at' => now(),
+            'role' => $isFirstUser ? 'admin' : 'user',
         ]);
         $this->updateUserAdditionalData($user, $steamUser['steamid']);
         return $user;
