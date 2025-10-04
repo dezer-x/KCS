@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('game_matches', function (Blueprint $table) {
-            $table->timestamp('connection_validated_at')->nullable()->after('updated_at');
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('connection_validated_at')->nullable()->after('started_at');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('game_matches', function (Blueprint $table) {
-            $table->dropColumn('connection_validated_at');
+            $table->dropColumn(['started_at', 'connection_validated_at']);
         });
     }
 };
